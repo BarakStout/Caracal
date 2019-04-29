@@ -1,0 +1,34 @@
+{
+  "name": "caracal",
+  "version": "1.0.0",
+  "description": "A Continuous Assessment Tool",
+  "main": "index.js",
+  "keywords": [
+    "socket.io"
+  ],
+  "dependencies": {
+    "csv-parser": "^2.2.0",
+    "date-utils": "^1.2.21",
+    "express": "^4.16.4",
+    "mysql": "^2.17.1",
+    "shuffle-array": "^1.0.1",
+    "socket.io": "latest"
+  },
+  "scripts": {
+    "start": "node index"
+  },
+  "author": "Barak Stout",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BarakStout/PracticeJava.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BarakStout/PracticeJava/issues"
+  },
+  "homepage": "https://github.com/BarakStout/PracticeJava#readme"
+}

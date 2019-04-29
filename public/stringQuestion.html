@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Caracal - A Continuous Assessment Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page-header " style="width: 80%; margin: 0 auto;">
+    <h1 onclick="window.location='index.html'">Caracal - <small>A Continuous Assessment Tool</small></h1>
+  </div>
+
+  <div id="nav" style="width: 80%; margin: 0 auto;">
+    <h4>Select category: </h4>
+    <button id="home" onclick="window.location='index.html'">Home</button>
+    <button id="arithmeticQuestionBtn" onclick="window.location='arithmeticQuestion.html'">Arithmetic</button>
+    <button id="StringQuestionBtn" onclick="window.location='stringQuestion.html'">String</button>
+    <button id="vocabQuestionBtn" onclick="window.location='vocabQuestion.html'">Vocab</button>
+  </div>
+
+  <div id="main" style="width: 80%; margin: 0 auto;">
+    <h3>A wild java program has appeared!
+    <br>Could you figure out what it does?</h3>
+    <p><em>If you think the program won't compile or result in a run-time error, leave the input box blank</em></p>
+
+    <div id="code"></div>
+    <div id="answer">
+      <input id="myanswer"></input>
+      <button id="sendAnswer">Submit Answer</button>
+      <button id="thebuttonq">Next Question</button>
+      <div id="serverAnswer"></div>
+      <div id="result"></div>
+      <div id="score"></div>
+    </div>
+  </div>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <script src="/lib/jquery-3.3.1.slim.min.js"></script>
+  <script src="/lib/jquery-1.10.2.min.js"></script>
+  <script src="/lib/popper.min.js"></script>
+  <script src="/lib/bootstrap.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
+</body>
+</html>
