@@ -5,9 +5,9 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
-const jm = require('./javaMath.js');
-const js = require('./javaString.js');
-const jv = require('./javaVocab.js');
+const jm = require('./js/javaMath.js');
+const js = require('./js/javaString.js');
+const jv = require('./js/javaVocab.js');
 const fs = require('fs');
 const exec = require("child_process").exec;
 const csv = require('csv-parser');
@@ -260,7 +260,7 @@ io.on('connection', function (socket) {
     }
     str = date + "," + data.name + "," + category + "," + data.qnum + "," + data.score + "\n";
     console.log(str);
-    fs.appendFile('highscores.csv', str, function (err) {
+    fs.appendFile('data/highscores.csv', str, function (err) {
       if (err) throw err;
       console.log('Saved!');
     });
@@ -272,7 +272,7 @@ io.on('connection', function (socket) {
   socket.on('getHSTableData', function () {
     console.log("get high score table");
     var rtn = [];
-    fs.createReadStream('highscores.csv')
+    fs.createReadStream('data/highscores.csv')
       .pipe(csv())
       .on('data', (row) => {
         rtn.push(row);
