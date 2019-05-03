@@ -37,6 +37,7 @@ app.get('/sendScore', function(req, res) {
 function User() { // public info
   this.level = 1;
   this.score = 0;
+  this.answer = "";
 }
 
 User.prototype.levelUp = function() {
@@ -74,7 +75,7 @@ function generateMathQuestion(id)
     if(err) {
         return console.log(err);
     }
-    console.log("The file was saved!");
+    //console.log("The file was saved!");
     fs.unlink('./tmp/' + filename + ".class", (e,s,st) => {if(e) console.log("no class file"); else console.log("file deleted");});
     exec('javac ./tmp/' + filename + ".java", (error, stdout, stderr) => { } );
 
@@ -93,7 +94,7 @@ function generateStringQuestion(id)
   filename = "TESTJSMATH_" + id.replace(/[^a-zA-Z ]/g, "");
   program = "public class "+filename + " { \n public static void main(String[] args) \n {";
   //js.loadJson("quotes");
-  console.log(users[id]);
+  //console.log(users[id]);
   if(users[id].level > 9 && users[id].level % 5 == 0) js.lvlUp();
   if(users[id].level < 0) js.lvlDown();
   js.resetVarNames();
@@ -110,7 +111,7 @@ function generateStringQuestion(id)
     if(err) {
         return console.log(err);
     }
-    console.log("The file was saved!");
+    //console.log("The file was saved!");
     fs.unlink('./tmp/' + filename + ".class", (e,s,st) => {if(e) console.log("no class file"); else console.log("file deleted");});
     exec('javac ./tmp/' + filename + ".java", (error, stdout, stderr) => { } );
 
@@ -125,9 +126,12 @@ function generateStringQuestion(id)
 
 function generateVocabQuestion(id)
 {
-  console.log("vocab question");
-  vocab = jv.getRandomVocab();
-  answers = jv.getFakeAnswers();
+  console.log("vocab question >>>> ");
+  vocabQuestion = jv.getRandomVocab();
+  console.log(vocabQuestion);
+  vocab = vocabQuestion["question"];
+  users[id].answer = vocabQuestion["answer"];
+  answers = vocabQuestion["choices"];
   io.sockets.connected[id].emit("vocabQuestion", {
       data: vocab,
       data2: answers
@@ -197,11 +201,11 @@ function getRightAnswer(id, data)
 function getVocabAnswer(id, data)
 {
 
-  corr = jv.getCorrectAnswer().trim().localeCompare(data.trim());
+  corr = (users[id].answer).trim().localeCompare(data.trim());
   if(corr == 0) users[id].scoreChange(+1);
   else users[id].scoreChange(-1);
   io.sockets.connected[id].emit("answer", {
-    data: jv.getCorrectAnswer(),
+    data: users[id].answer,
     correct: corr == 0
   });
 
@@ -241,15 +245,15 @@ io.on('connection', function (socket) {
   });
 
   socket.on('getScore', function () {
-    console.log("score inqury");
+    //console.log("score inqury");
     io.sockets.connected[socket.id].emit("getScore", {
   		  score: users[socket.id].score
   		});
   });
 
   socket.on('scoreSumbission', function(data) {
-    console.log('got score and name');
-    console.log(data);
+    //console.log('got score and name');
+    //console.log(data);
     //console.log("name: " + name + " score: " + users[socket.id].score);
     var nowDate = new Date();
     var date = (nowDate.getMonth()+1)+'-'+nowDate.getDate() + "-"+ nowDate.getFullYear();
@@ -259,10 +263,10 @@ io.on('connection', function (socket) {
       case "vocabQuestion": category = "Vocabulary"; break;
     }
     str = date + "," + data.name + "," + category + "," + data.qnum + "," + data.score + "\n";
-    console.log(str);
+    //console.log(str);
     fs.appendFile('data/highscores.csv', str, function (err) {
       if (err) throw err;
-      console.log('Saved!');
+      //console.log('Saved!');
     });
     io.sockets.connected[socket.id].emit("scoreSent", {
       score: "blah"
@@ -270,16 +274,16 @@ io.on('connection', function (socket) {
   });
 
   socket.on('getHSTableData', function () {
-    console.log("get high score table");
+    //console.log("get high score table");
     var rtn = [];
     fs.createReadStream('data/highscores.csv')
       .pipe(csv())
       .on('data', (row) => {
         rtn.push(row);
-        console.log(row);
+        //console.log(row);
       })
       .on('end', () => {
-        console.log('CSV file successfully processed');
+        //console.log('CSV file successfully processed');
         rtn.sort(function(a,b){
             if (a["Score"] > b["Score"])
               return -1;
@@ -296,3 +300,6 @@ io.on('connection', function (socket) {
 });
 
 http.listen(port, () => console.log('listening on port ' + port));
+require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+  console.log('addr: '+add);
+})

@@ -17,6 +17,8 @@ pre {
   white-space: pre-wrap;
 }
 
+h1 small { font-size: 60% !important; }
+
 /**
  * Canvas
  */

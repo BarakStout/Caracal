@@ -6,11 +6,6 @@ fs.readFile('data/APCompSciAVocab.json', 'utf8', function(err, contents) {
 
 var shuffle = require('shuffle-array');
 
-var lvl = 1;
-var vocab = "";
-var ranswer = "";
-var fakeAnswers = [];
-
 module.exports = {
 
 
@@ -18,6 +13,9 @@ module.exports = {
   // Output: java declration of variable
   getRandomVocab: function()
   {
+    var vocab = "";
+    var ranswer = "";
+    var fakeAnswers = [];
     x = Math.floor(Math.random()*vocabs.length);
     console.log(x);
     console.log(vocabs[x]);
@@ -35,17 +33,8 @@ module.exports = {
     }
     fakeAnswers[i] = vocabs[x]["Definition"];
     shuffle(fakeAnswers);
-    return vocab;
+    return { 'question': vocab, 'answer': ranswer, 'choices': fakeAnswers };
 
-  },
-
-  getCorrectAnswer: function()
-  {
-    return ranswer;
-  },
-
-  getFakeAnswers: function()
-  {
-    return fakeAnswers;
   }
+
 }

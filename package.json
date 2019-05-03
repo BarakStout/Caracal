@@ -25,10 +25,10 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BarakStout/PracticeJava.git"
+    "url": "git+https://github.com/BarakStout/Caracal.git"
   },
   "bugs": {
-    "url": "https://github.com/BarakStout/PracticeJava/issues"
+    "url": "https://github.com/BarakStout/Caracal/issues"
   },
-  "homepage": "https://github.com/BarakStout/PracticeJava#readme"
+  "homepage": "https://github.com/BarakStout/Caracal#readme"
 }
